@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/testing": {
+      "name": "/testing",
+      "lambdaFunction": "musictesting",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
+// aws amplify config
+import { Amplify, API } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
 export default function App() {
   return (
     <div className="App">
@@ -20,5 +25,17 @@ const LyricsDiaplay = () => {
 };
 
 const AmplifyBackendTesting = () => {
-  return <p>Backend</p>
-}
+  const [mes, setMes] = useState("");
+
+  useEffect(() => {
+    fetchTestingAPI();
+  }, []);
+
+  const fetchTestingAPI = async () => {
+    const apiRes = await API.get("testing", "/testing");
+    setMes(apiRes)
+    console.log("asdfa")
+  };
+
+  return <p>{mes.success} on {mes.url}</p>;
+};
