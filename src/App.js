@@ -1,41 +1,23 @@
-import { useState, useEffect } from "react";
-import "./App.css";
+import Main from "./pages/Main";
+import ManageCharity from "./pages/ManageCharity";
 
-// aws amplify config
-import { Amplify, API } from 'aws-amplify';
-import awsconfig from './aws-exports';
-Amplify.configure(awsconfig);
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 export default function App() {
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Main />,
+    },{
+      path: "manageCharity",
+      element: <ManageCharity />
+    }
+  ]);
+
   return (
     <div className="App">
-      <Header />
-      <LyricsDiaplay />
-      <AmplifyBackendTesting />
+      <RouterProvider router={router} />
     </div>
   );
 }
-
-const Header = () => {
-  return <p>Search Bar</p>;
-};
-
-const LyricsDiaplay = () => {
-  return <p>Display Lyrics</p>;
-};
-
-const AmplifyBackendTesting = () => {
-  const [mes, setMes] = useState("");
-
-  useEffect(() => {
-    fetchTestingAPI();
-  }, []);
-
-  const fetchTestingAPI = async () => {
-    const apiRes = await API.get("testing", "/testing");
-    setMes(apiRes)
-    console.log("asdfa")
-  };
-
-  return <p>{mes.success} on {mes.url}</p>;
-};
