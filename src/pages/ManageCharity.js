@@ -30,31 +30,28 @@ export default function ManageCharity() {
     fetchCharities();
   }, []);
 
-  async function fetchCharities() {
+  const fetchCharities = async () => {
     const apiData = await API.graphql({ query: listCharities });
     const charitiesFromAPI = apiData.data.listCharities.items;
     setCharities(charitiesFromAPI);
-  }
+  };
 
-  async function deleteCharity({ id }) {
+  const deleteCharity = async ({ id }) => {
     const newCharities = charities.filter((note) => note.id !== id);
     setCharities(newCharities);
     await API.graphql({
       query: deleteCharityMutation,
       variables: { input: { id } },
     });
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     await API.graphql({
       query: createCharityMutation,
       variables: { input: formInput },
     });
-
     fetchCharities();
-
   };
 
   const handleInput = (evt) => {
