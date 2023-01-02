@@ -1,5 +1,5 @@
 import Main from "./pages/Main";
-import ManageCharity from "./pages/ManageCharity";
+import ManageCharity from "./pages/ManageCharity/ManageCharity";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 

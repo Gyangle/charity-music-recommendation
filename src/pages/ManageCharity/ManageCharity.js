@@ -7,13 +7,14 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import TableDisplay from "./TableDisplay";
 
 // graphQL
-import { listCharities } from "./../graphql/queries";
+import { listCharities } from "./../../graphql/queries";
 import {
   createCharity as createCharityMutation,
   deleteCharity as deleteCharityMutation,
-} from "./../graphql/mutations";
+} from "./../../graphql/mutations";
 import { API } from "aws-amplify";
 
 export default function ManageCharity() {
@@ -65,6 +66,7 @@ export default function ManageCharity() {
       <Paper sx={{ m: 3, p: 3 }}>
         <Typography variant="h3">Manage Charity</Typography>
         <Typography variant="p">CRUD the charity database.</Typography>
+
         <Box sx={{ mt: 5 }}>
           <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
             Add Charity
@@ -90,24 +92,10 @@ export default function ManageCharity() {
             </Button>
           </form>
         </Box>
-
-        <Box sx={{ mt: 5 }}>
-          <Typography variant="h5">Manage Charity</Typography>
-          {charities.map((note) => (
-            <Stack
-              key={note.id || note.name}
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Typography>{note.name}</Typography>
-              <Typography>{note.description}</Typography>
-              <Button variation="link" onClick={() => deleteCharity(note)}>
-                Delete note
-              </Button>
-            </Stack>
-          ))}
+        <Box sx={{ mt: 5 }} >
+          <TableDisplay charities={charities} deleteCharity={deleteCharity}/>
         </Box>
+        
       </Paper>
     </div>
   );
