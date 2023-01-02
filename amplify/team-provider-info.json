@@ -23,7 +23,8 @@
         "charitymusicrecommen": {}
       },
       "api": {
-        "testing": {}
+        "testing": {},
+        "charitymusicrecommen": {}
       }
     }
   }
