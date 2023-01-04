@@ -1,4 +1,4 @@
-import Main from "./pages/Main";
+import Main from "./pages/Main/Main";
 import ManageCharity from "./pages/ManageCharity/ManageCharity";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
