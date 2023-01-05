@@ -1,8 +1,19 @@
 import { useState, useEffect } from "react";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+import {
+  Button,
+  TextField,
+  Stack,
+  Paper,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@mui/material";
 
 import { API } from "aws-amplify";
-import ResponsiveAppBar from "./ResponsiveAppBar";
-import { Button, TextField, Stack, Paper, Box } from "@mui/material";
+import { listCharities } from "./../../graphql/queries";
 
 export default function Main() {
   return (
@@ -32,35 +43,53 @@ const LyricsRecDisplay = () => {
       <Stack
         direction="row"
         justifyContent="space-between"
-        alignItems="baseline"
+        alignItems="flex-start"
+        spacing={2}
       >
-        <Paper elevation={2} sx={{ width: "40%", height: "75%" }}>
-          <p>Display Lyrics</p>
+        <Paper elevation={2} sx={{ width: "100%", minHeight: "84vh" }}>
+          <Typography>Display Lyrics</Typography>
         </Paper>
-        <Paper elevation={2} sx={{ width: "50%" }}>
-          <AmplifyBackendTesting></AmplifyBackendTesting>
-          <p>Charity Cards</p>
-        </Paper>
+        <Box sx={{ width: "100%" }}>
+          <RecDisplay />
+        </Box>
       </Stack>
     </Box>
   );
 };
 
-const AmplifyBackendTesting = () => {
-  const [mes, setMes] = useState("");
+const RecDisplay = () => {
+  const [charities, setCharities] = useState([]);
 
   useEffect(() => {
-    fetchTestingAPI();
+    fetchCharities();
   }, []);
 
-  const fetchTestingAPI = async () => {
-    const apiRes = await API.get("testing", "/testing");
-    setMes(apiRes);
+  const fetchCharities = async () => {
+    const apiData = await API.graphql({ query: listCharities });
+    const charitiesFromAPI = apiData.data.listCharities.items;
+    setCharities(charitiesFromAPI);
   };
 
-  return (
-    <p>
-      {mes.success} on {mes.url}
-    </p>
-  );
+  const CharityCard = ({ charityInfo }) => {
+    return (
+      <Card sx={{ minWidth: 275, mb: 3 }}>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            {charityInfo.name}
+          </Typography>
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {charityInfo.group}
+          </Typography>
+          <Typography variant="body2">{charityInfo.description}</Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </Card>
+    );
+  };
+
+  return charities.map((charityInfo) => (
+    <CharityCard key={charityInfo.id} charityInfo={charityInfo} />
+  ));
 };
