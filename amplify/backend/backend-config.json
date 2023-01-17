@@ -1,4 +1,38 @@
 {
+  "api": {
+    "charitymusicrecommen": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDate": "2024-01-17T02:20:06.693Z",
+              "apiKeyExpirationDays": 365,
+              "description": ""
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    },
+    "testing": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "musictesting"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "function": {
     "musictesting": {
       "build": true,
@@ -6,36 +40,22 @@
       "service": "Lambda"
     }
   },
-  "api": {
-    "testing": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
+  "parameters": {
+    "AMPLIFY_function_musictesting_deploymentBucketName": {
+      "usedBy": [
         {
           "category": "function",
-          "resourceName": "musictesting",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
+          "resourceName": "musictesting"
         }
       ]
     },
-    "charitymusicrecommen": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
-            }
-          },
-          "additionalAuthenticationProviders": []
+    "AMPLIFY_function_musictesting_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "musictesting"
         }
-      }
+      ]
     }
   }
 }

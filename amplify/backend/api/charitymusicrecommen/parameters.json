@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "charitymusicrecommen",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-01-17T02:20:13.091Z"
 }
